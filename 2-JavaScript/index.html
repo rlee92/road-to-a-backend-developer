@@ -14,15 +14,16 @@
     document.querySelector('body').style.backgroundColor='white'
     document.querySelector('body').style.color='black'
   "> -->
-  <input id="night_day" type="button" name="" value="dark-mode" onclick="
-    if(document.querySelector('#night_day').value ==='dark-mode') {
-      document.querySelector('body').style.backgroundColor='black'
-      document.querySelector('body').style.color='white'
-      document.querySelector('#night_day').value = 'light-mode'
+  <input type="button" name="" value="dark-mode" onclick="
+  var target = document.querySelector('body')
+    if(this.value ==='dark-mode') {
+      target.style.backgroundColor='black'
+      target.style.color='white'
+      this.value = 'light-mode'
     } else {
-      document.querySelector('body').style.backgroundColor='white'
-      document.querySelector('body').style.color='black'
-      document.querySelector('#night_day').value = 'dark-mode'
+      target.style.backgroundColor='white'
+      target.style.color='black'
+      this.value = 'dark-mode'
     }
   ">
   <ol>
