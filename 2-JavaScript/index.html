@@ -6,20 +6,18 @@
 </head>
 <body>
   <h1><a href="index.html">WEB</a></h1>
-  <!-- <input type="button" name="" value="dark-mode" onclick="
-    document.querySelector('body').style.backgroundColor='black'
-    document.querySelector('body').style.color='white'
-  ">
-  <input type="button" name="" value="light-mode" onclick="
-    document.querySelector('body').style.backgroundColor='white'
-    document.querySelector('body').style.color='black'
-  "> -->
   <input type="button" name="" value="dark-mode" onclick="
   var target = document.querySelector('body')
+  var links = document.querySelectorAll('a')
+  var i = 0
     if(this.value ==='dark-mode') {
       target.style.backgroundColor='black'
       target.style.color='white'
       this.value = 'light-mode'
+      while(i<links.length){
+        links[i].style.color='powderblue'
+        i++
+      }
     } else {
       target.style.backgroundColor='white'
       target.style.color='black'

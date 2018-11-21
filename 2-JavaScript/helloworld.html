@@ -37,5 +37,30 @@
       <!-- id is unique. can be used only once. class > id  -->
       <span id="first" class="js"> JavaScript</span> (/ˈdʒɑːvəˌskrɪpt/[6]), often abbreviated as JS, is a high-level, dynamic, weakly typed, prototype-based, multi-paradigm, and interpreted programming language. Alongside <span>HTML</span> and CSS, <span class="js"> JavaScript</span> is one of the three core technologies of World Wide Web content production. It is used to make webpages interactive and provide online programs, including video games. The majority of websites employ it, and all modern web browsers support it without the need for plug-ins by means of a built-in <span class="js"> JavaScript</span> engine. Each of the many <span class="js"> JavaScript</span> engines represent a different implementation of <span class="js"> JavaScript</span>, all based on the ECMAScript specification, with some engines not supporting the spec fully, and with many engines supporting additional features beyond ECMA.
     </p>
+    <h1>Array</h1>
+    <h3>Syntax</h3>
+    <script type="text/javascript">
+      var fruits = ['apple', 'banana']
+    </script>
+    <h3>Get</h3>
+    <script type="text/javascript">
+      document.write(fruits[0]+'\n')
+      document.write(fruits[1])
+    </script>
+    <h3>Add</h3>
+    <script type="text/javascript">
+      fruits.push('pear')
+      fruits.push('orange')
+      document.write(fruits)
+    </script>
+    <h1>Loop</h1>
+    <script type="text/javascript">
+      document.write(fruits)
+      var i = 0
+      while (i < fruits.length) {
+        document.write('<li><a href="https://www.google.com/search?q='+fruits[i]+'">'+fruits[i]+'</a></li>')
+        i++
+      }
+    </script>
   </body>
 </html>
