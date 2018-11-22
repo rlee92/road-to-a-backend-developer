@@ -4,33 +4,41 @@
   <title>WEB1 - Welcome</title>
   <meta charset="utf-8">
   <script type="text/javascript">
-    function nightDayHandler(self){
-      var target = document.querySelector('body')
+    function setLinksColor(color) {
       var links = document.querySelectorAll('a')
       var i = 0
+      while(i<links.length){
+        links[i].style.color=color
+        i++
+      }
+    }
+
+    function setBodyColor(color){
+      document.querySelector('body').style.color = color
+    }
+
+    function setBackgroundColor(color){
+      document.querySelector('body').style.backgroundColor = color
+    }
+
+    function darkModeHandler(self){
         if(self.value ==='dark-mode') {
-          target.style.backgroundColor='black'
-          target.style.color='white'
+          setBackgroundColor('black')
+          setBodyColor('white')
+          setLinksColor('powderblue')
           self.value = 'light-mode'
-          while(i<links.length){
-            links[i].style.color='powderblue'
-            i++
-          }
         } else {
-          target.style.backgroundColor='white'
-          target.style.color='black'
+          setBackgroundColor('white')
+          setBodyColor('black')
+          setLinksColor('coral')
           self.value = 'dark-mode'
-          while(i<links.length){
-            links[i].style.color='coral'
-            i++
-          }
         }
     }
   </script>
 </head>
 <body>
   <h1><a href="index.html">WEB</a></h1>
-  <input type="button" name="" value="dark-mode" onclick="nightDayHandler(this)">
+  <input type="button" name="" value="dark-mode" onclick="darkModeHandler(this)">
   <ol>
     <li><a href="1.html">HTML</a></li>
     <li><a href="2.html">CSS</a></li>
