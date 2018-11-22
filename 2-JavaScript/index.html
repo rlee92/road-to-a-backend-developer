@@ -3,31 +3,34 @@
 <head>
   <title>WEB1 - Welcome</title>
   <meta charset="utf-8">
+  <script type="text/javascript">
+    function nightDayHandler(self){
+      var target = document.querySelector('body')
+      var links = document.querySelectorAll('a')
+      var i = 0
+        if(self.value ==='dark-mode') {
+          target.style.backgroundColor='black'
+          target.style.color='white'
+          self.value = 'light-mode'
+          while(i<links.length){
+            links[i].style.color='powderblue'
+            i++
+          }
+        } else {
+          target.style.backgroundColor='white'
+          target.style.color='black'
+          self.value = 'dark-mode'
+          while(i<links.length){
+            links[i].style.color='coral'
+            i++
+          }
+        }
+    }
+  </script>
 </head>
 <body>
   <h1><a href="index.html">WEB</a></h1>
-  <input type="button" name="" value="dark-mode" onclick="
-  var target = document.querySelector('body')
-  var links = document.querySelectorAll('a')
-  var i = 0
-    if(this.value ==='dark-mode') {
-      target.style.backgroundColor='black'
-      target.style.color='white'
-      this.value = 'light-mode'
-      while(i<links.length){
-        links[i].style.color='powderblue'
-        i++
-      }
-    } else {
-      target.style.backgroundColor='white'
-      target.style.color='black'
-      this.value = 'dark-mode'
-      while(i<links.length){
-        links[i].style.color='coral'
-        i++
-      }
-    }
-  ">
+  <input type="button" name="" value="dark-mode" onclick="nightDayHandler(this)">
   <ol>
     <li><a href="1.html">HTML</a></li>
     <li><a href="2.html">CSS</a></li>
