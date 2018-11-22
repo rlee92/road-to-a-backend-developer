@@ -62,5 +62,40 @@
         i++
       }
     </script>
+    <h1>Function</h1>
+    <h2>Basic</h2>
+    <ul>
+      <script>
+        function two(){
+          document.write('<li>2-1</li>');
+          document.write('<li>2-2</li>');
+        }
+        document.write('<li>1</li>');
+        two();
+        document.write('<li>3</li>');
+        two();
+      </script>
+    </ul>
+    <h2>Parameter & Argument</h2>
+    <script type="text/javascript">
+      function onePlusOne(){
+        document.write(1+1+'<br>')
+      }
+      onePlusOne()
+      function sum(x,y) {
+        document.write(x+y+'<br>')
+      }
+      sum(2,3)
+      sum(1,6)
+    </script>
+    <h2>Return</h2>
+    <script type="text/javascript">
+      function sum2(a,b) {
+        return a+b
+      }
+      document.write(sum2(2,3)+'<br>')
+      document.write('<div style="color:red" >'+ sum2(2,3)+'</div>')
+      document.write('<div style="font-size:3rem" >'+ sum2(2,3)+'</div>')
+    </script>
   </body>
 </html>
