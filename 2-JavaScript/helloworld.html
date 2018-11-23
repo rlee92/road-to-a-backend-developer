@@ -97,5 +97,19 @@
       document.write('<div style="color:red" >'+ sum2(2,3)+'</div>')
       document.write('<div style="font-size:3rem" >'+ sum2(2,3)+'</div>')
     </script>
+    <h1>Object</h1>
+    <h2>Create</h2>
+    <script type="text/javascript">
+      var cowokers = {
+        "programmer":"egoing",
+        "designer":"leezche"
+      }
+      document.write("Programmer is " + cowokers.programmer + "<br>")
+      document.write("Designer is " + cowokers.designer + "<br>")
+      cowokers.bookkeeper = "duru"
+      document.write("Bookkeeper is " + cowokers.bookkeeper + "<br>")
+      cowokers["data scientist"] = "taeho"
+      document.write("Data scientist is " + cowokers["data scientist"] + "<br>")
+    </script>
   </body>
 </html>
