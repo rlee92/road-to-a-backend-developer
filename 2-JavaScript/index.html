@@ -4,33 +4,36 @@
   <title>WEB1 - Welcome</title>
   <meta charset="utf-8">
   <script type="text/javascript">
-    function setLinksColor(color) {
-      var links = document.querySelectorAll('a')
-      var i = 0
-      while(i<links.length){
-        links[i].style.color=color
-        i++
+    var Links = {
+       setColor:function(color) {
+        var links = document.querySelectorAll('a')
+        var i = 0
+        while(i<links.length){
+          links[i].style.color=color
+          i++
+        }
       }
     }
 
-    function setBodyColor(color){
-      document.querySelector('body').style.color = color
-    }
-
-    function setBackgroundColor(color){
-      document.querySelector('body').style.backgroundColor = color
+    var Body = {
+      setBodyColor:function(color){
+          document.querySelector('body').style.color = color
+      },
+      setBackgroundColor:function(color){
+        document.querySelector('body').style.backgroundColor = color
+      }
     }
 
     function darkModeHandler(self){
         if(self.value ==='dark-mode') {
-          setBackgroundColor('black')
-          setBodyColor('white')
-          setLinksColor('powderblue')
+          Body.setBackgroundColor('black')
+          Body.setBodyColor('white')
+          Links.setColor('powderblue')
           self.value = 'light-mode'
         } else {
-          setBackgroundColor('white')
-          setBodyColor('black')
-          setLinksColor('coral')
+          Body.setBackgroundColor('white')
+          Body.setBodyColor('black')
+          Links.setColor('coral')
           self.value = 'dark-mode'
         }
     }
