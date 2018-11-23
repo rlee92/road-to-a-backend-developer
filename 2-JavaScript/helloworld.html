@@ -100,16 +100,34 @@
     <h1>Object</h1>
     <h2>Create</h2>
     <script type="text/javascript">
-      var cowokers = {
+      var coworkers = {
         "programmer":"egoing",
         "designer":"leezche"
       }
-      document.write("Programmer is " + cowokers.programmer + "<br>")
-      document.write("Designer is " + cowokers.designer + "<br>")
-      cowokers.bookkeeper = "duru"
-      document.write("Bookkeeper is " + cowokers.bookkeeper + "<br>")
-      cowokers["data scientist"] = "taeho"
-      document.write("Data scientist is " + cowokers["data scientist"] + "<br>")
+      document.write("Programmer is " + coworkers.programmer + "<br>")
+      document.write("Designer is " + coworkers.designer + "<br>")
+      coworkers.bookkeeper = "duru"
+      document.write("Bookkeeper is " + coworkers.bookkeeper + "<br>")
+      // . is an object operator for accessing to the object
+      // if there is a space in value, we use something similar that we use for array 
+      coworkers["data scientist"] = "taeho"
+      document.write("Data scientist is " + coworkers["data scientist"] + "<br>")
+    </script>
+    <h2>Iterate</h2>
+    <script type="text/javascript">
+      for (var key in coworkers) {
+        // document.write(key + "<br>")
+        document.write(key+ " : " + coworkers[key] + "<br>")
+      }
+    </script>
+    <h2>Property & Method</h2>
+    <script type="text/javascript">
+      coworkers.showAll = function(){
+        for (var key in this) {
+          document.write(key+ " : " + this[key] + "<br>")
+        }
+      }
+        coworkers.showAll()
     </script>
   </body>
 </html>
