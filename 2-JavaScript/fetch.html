@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <article class="">
+
+    </article>
+    <input type="button" name="" value="fetch" onclick="
+      fetch('index.html').then(function(response){
+        response.text().then(function(text){
+          alert(text)
+          document.querySelector('article').innerHTML=text
+        })
+      })
+    ">
+  </body>
+</html>
