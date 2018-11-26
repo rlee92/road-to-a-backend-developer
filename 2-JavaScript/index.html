@@ -5,29 +5,19 @@
   <meta charset="utf-8">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script type="text/javascript" src="colors.js"></script>
+  <script type="text/javascript" src="fetch.js"></script>
 </head>
 <body>
   <h1><a href="index.html">WEB</a></h1>
   <input type="button" name="" value="dark-mode" onclick="darkModeHandler(this)">
   <ol>
-    <li><a href="fetchPage(1.html)">HTML</a></li>
-    <li><a href="fetchPage(2.html)">CSS</a></li>
-    <li><a href="fetchPage(3.html)">JavaScript</a></li>
+    <li><a onclick="fetchPage('contents/html')">HTML</a></li>
+    <li><a onclick="fetchPage('contents/css')">CSS</a></li>
+    <li><a onclick="fetchPage('contents/javascript')">JavaScript</a></li>
   </ol>
   <h2>WEB</h2>
   <p>The World Wide Web (abbreviated WWW or the Web) is an information space where documents and other web resources are identified by Uniform Resource Locators (URLs), interlinked by hypertext links, and can be accessed via the Internet.[1] English scientist Tim Berners-Lee invented the World Wide Web in 1989. He wrote the first web browser computer program in 1990 while employed at CERN in Switzerland.[2][3] The Web browser was released outside of CERN in 1991, first to other research institutions starting in January 1991 and to the general public on the Internet in August 1991.
   </p>
-  <article class="">
-
-  </article>
-  <script type="text/javascript">
-    function fetchPage(name){
-      fetch(name).then(function(response){
-        response.text().then(function(text){
-          document.querySelector('article').innerHTML=text
-        })
-      })
-    }
-  </script>
+  <article class=""></article>
 </body>
 </html>
