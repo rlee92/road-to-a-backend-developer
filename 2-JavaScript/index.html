@@ -12,8 +12,12 @@
     // statusChangeCallback(response)
     if (response.status === 'connected'){
       document.querySelector('#authBtn').value = 'Logout'
+      FB.api('/me', function(resp){
+        document.querySelector('#name').innerHTML = ',' + resp.name
+      })
     }else{
       document.querySelector('#authBtn').value = 'Login'
+      document.querySelector('#name').innerHTML = ' '
     }
   }
   window.fbAsyncInit = function() {
@@ -70,6 +74,7 @@
     })
   }
   ">
+  <span id="name"> </span>
   <h1><a href="index.html">WEB</a></h1>
   <input type="button" name="" value="dark-mode" onclick="darkModeHandler(this)">
   <ol id='nav'> </ol>
