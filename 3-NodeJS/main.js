@@ -1,7 +1,7 @@
-var http = require('http')
-var fs = require('fs')
-var app = http.createServer(function(request,response){
-    var url = request.url
+let http = require('http')
+let fs = require('fs')
+let app = http.createServer((request,response) => {
+    let url = request.url
     if(request.url == '/'){
       url = '/index.html'
     }
@@ -15,6 +15,6 @@ var app = http.createServer(function(request,response){
     response.end(fs.readFileSync(__dirname + url))
 
 })
-app.listen(3000, function() {
+app.listen(3000, () => {
   console.log('Server is running...')
 })
