@@ -1,19 +1,22 @@
-let http = require('http')
-let fs = require('fs')
+const http = require('http')
+const url = require('url')
+const fs = require('fs')
 let app = http.createServer((request,response) => {
-    let url = request.url
-    if(request.url == '/'){
-      url = '/index.html'
+    let _url = request.url
+    let queryData = url.parse(_url, true).query
+    console.log(queryData.id)
+    if(_url == '/'){
+      _url = '/index.html'
     }
-    if(request.url == '/favicon.ico'){
+    if(_url == '/favicon.ico'){
       response.writeHead(404)
       response.end()
       return
 
     }
     response.writeHead(200)
-    console.log(__dirname + url)
-    response.end(fs.readFileSync(__dirname + url))
+    // response.end(fs.readFileSync(__dirname + _url))
+    response.end(queryData.id)
 
 })
 app.listen(3000, () => {
