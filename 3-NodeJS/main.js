@@ -10,10 +10,19 @@ let app = http.createServer((request,response) => {
 
   if(pathName === '/'){
     if(queryData.id === undefined){
-      fs.readFile(`data/${queryData.id}`, 'utf8', function(err, description){
-        var title = 'Welcome'
-        var description = 'Hello, Node.js'
-        var template = `
+
+      fs.readdir('./data', (error, fileList) => {
+        let title = 'Welcome'
+        let description = 'Hello, Node.js'
+        let list = '<ul>'
+        let i = 0;
+        while(i < fileList.length) {
+          list = list + `<li><a href="/?id=${fileList[i]}">${fileList[i]}</a></li>`
+          i++
+        }
+        list = list + '</ul>'
+
+        let template = `
         <!doctype html>
         <html>
         <head>
@@ -22,11 +31,7 @@ let app = http.createServer((request,response) => {
         </head>
         <body>
         <h1><a href="/">WEB</a></h1>
-        <ul>
-        <li><a href="/?id=HTML">HTML</a></li>
-        <li><a href="/?id=CSS">CSS</a></li>
-        <li><a href="/?id=JavaScript">JavaScript</a></li>
-        </ul>
+        ${list}
         <h2>${title}</h2>
         <p>${description}</p>
         </body>
@@ -35,38 +40,47 @@ let app = http.createServer((request,response) => {
         response.writeHead(200)
         response.end(template)
       })
+
+
     } else {
-      fs.readFile(`data/${queryData.id}`, 'utf8', function(err, description){
-        title = queryData.id
-        template = `
-        <!doctype html>
-        <html>
-        <head>
-        <title>WEB1 - ${title}</title>
-        <meta charset="utf-8">
-        </head>
-        <body>
-        <h1><a href="/">WEB</a></h1>
-        <ul>
-        <li><a href="/?id=HTML">HTML</a></li>
-        <li><a href="/?id=CSS">CSS</a></li>
-        <li><a href="/?id=JavaScript">JavaScript</a></li>
-        </ul>
-        <h2>${title}</h2>
-        <p>${description}</p>
-        </body>
-        </html>
-        `
-        response.writeHead(200)
-        response.end(template)
-      })
+      fs.readdir('./data', function(error, fileList){
+        var title = 'Welcome';
+        var description = 'Hello, Node.js';
+        var list = '<ul>';
+        var i = 0;
+        while(i < fileList.length){
+          list = list + `<li><a href="/?id=${fileList[i]}">${fileList[i]}</a></li>`;
+          i = i + 1;
+        }
+        list = list+'</ul>';
+        fs.readFile(`data/${queryData.id}`, 'utf8', function(err, description){
+          var title = queryData.id;
+          var template = `
+          <!doctype html>
+          <html>
+          <head>
+          <title>WEB1 - ${title}</title>
+          <meta charset="utf-8">
+          </head>
+          <body>
+          <h1><a href="/">WEB</a></h1>
+          ${list}
+          <h2>${title}</h2>
+          <p>${description}</p>
+          </body>
+          </html>
+          `;
+          response.writeHead(200);
+          response.end(template);
+        });
+      });
     }
   } else {
-    response.writeHead(404)
-    response.end('Not found')
+    response.writeHead(404);
+    response.end('Not found');
   }
 })
 
-app.listen(3000, () => {
-  console.log("Server is running...")
-})
+  app.listen(3000, () => {
+    console.log("Server is running...")
+  })
