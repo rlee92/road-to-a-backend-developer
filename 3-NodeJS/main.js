@@ -65,36 +65,36 @@ let app = http.createServer((request,response) => {
       let list = templateList(fileList)
       let template = templateHTML(title, list, `
         <form action="http://localhost:3000/create_process" method="post">
-            <p><input type="text" name="title" placeholder="title"></p>
-            <p>
-              <textarea name="description" placeholder="description"></textarea>
-            </p>
-            <p>
-              <input type="submit">
-            </p>
-          </form>`)
-      response.writeHead(200)
-      response.end(template)
-    })
-  } else if (pathName === '/create_process') {
-    let body = ''
-    request.on('data', function(data){
-          body = body + data;
+        <p><input type="text" name="title" placeholder="title"></p>
+        <p>
+        <textarea name="description" placeholder="description"></textarea>
+        </p>
+        <p>
+        <input type="submit">
+        </p>
+        </form>`)
+        response.writeHead(200)
+        response.end(template)
       })
-    request.on('end', function(){
-      let post = qs.parse(body);
-      let title = post.title;
-      let description = post.description
-    });
-
-    response.writeHead(200)
-    response.end('success')
-
-  } else {
-    response.writeHead(404)
-    response.end('Page Not Found!')
-  }
-})
+    } else if (pathName === '/create_process') {
+      let body = ''
+      request.on('data', (data) => {
+        body = body + data;
+      })
+      request.on('end', _ => {
+        let post = qs.parse(body);
+        let title = post.title;
+        let description = post.description
+        fs.writeFile(`data/${title}`, description, 'utf8', (err) => {
+          response.writeHead(302, {Location: `/?id=${title}`});
+          response.end();
+        })
+      })
+    } else {
+      response.writeHead(404)
+      response.end('Page Not Found!')
+    }
+  })
 
   app.listen(3000, () => {
     console.log("Server is running...")
