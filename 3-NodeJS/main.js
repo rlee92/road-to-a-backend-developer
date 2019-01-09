@@ -14,7 +14,7 @@ let templateList = (fileList) => {
   return list
 }
 
-let templateHTML = (title, list, desc) => {
+let templateHTML = (title, list, desc, control) => {
   return `
     <!doctype html>
     <html>
@@ -25,7 +25,7 @@ let templateHTML = (title, list, desc) => {
     <body>
     <h1><a href="/">WEB</a></h1>
     ${list}
-    <a href="/create"> Create </a>
+    ${control}
     <h2>${title}</h2>
     <p>${desc}</p>
     </body>
@@ -44,7 +44,7 @@ let app = http.createServer((request,response) => {
         let title = 'Welcome'
         let description = 'Hello, Node.js'
         let list = templateList(fileList)
-        let template = templateHTML(title, list, description)
+        let template = templateHTML(title, list, description, `<a href="/create"> Create </a>`)
         response.writeHead(200)
         response.end(template)
       })
@@ -53,7 +53,7 @@ let app = http.createServer((request,response) => {
         fs.readFile(`data/${queryData.id}`, 'utf8', (err, description) => {
           let title = queryData.id
           let list = templateList(fileList)
-          let template = templateHTML(title, list, description)
+          let template = templateHTML(title, list, description, `<a href="/create"> Create </a> <a href="/update?id=${title}"> Update </a>`)
           response.writeHead(200)
           response.end(template)
         })
@@ -64,7 +64,7 @@ let app = http.createServer((request,response) => {
       let title = 'WEB - Create'
       let list = templateList(fileList)
       let template = templateHTML(title, list, `
-        <form action="http://localhost:3000/create_process" method="post">
+        <form action="/create_process" method="post">
         <p><input type="text" name="title" placeholder="title"></p>
         <p>
         <textarea name="description" placeholder="description"></textarea>
@@ -72,7 +72,7 @@ let app = http.createServer((request,response) => {
         <p>
         <input type="submit">
         </p>
-        </form>`)
+        </form>`, '')
         response.writeHead(200)
         response.end(template)
       })
@@ -88,6 +88,45 @@ let app = http.createServer((request,response) => {
         fs.writeFile(`data/${title}`, description, 'utf8', (err) => {
           response.writeHead(302, {Location: `/?id=${title}`});
           response.end();
+        })
+      })
+    } else if(pathName === '/update') {
+      fs.readdir('./data', (error, fileList) => {
+        fs.readFile(`data/${queryData.id}`, 'utf8', (err, description) => {
+          let title = queryData.id
+          let list = templateList(fileList)
+          let template = templateHTML(title, list,
+            `<form action="/update_process" method="post">
+            <input type="hidden" name="id" value="${title}">
+            <p><input type="text" name="title" placeholder="title" value="${title}"></p>
+            <p>
+            <textarea name="description" placeholder="description" value=${description}></textarea>
+            </p>
+            <p>
+            <input type="submit">
+            </p>
+            </form>
+            `
+          , `<a href="/create"> Create </a> <a href="/update?id=${title}"> Update </a>`)
+          response.writeHead(200)
+          response.end(template)
+        })
+      })
+    } else if(pathName === '/update_process') {
+      let body = ''
+      request.on('data', (data) => {
+        body = body + data;
+      })
+      request.on('end', _ => {
+        let post = qs.parse(body);
+        let title = post.title;
+        let id = post.id
+        let description = post.description
+        fs.rename(`data/${id}`, `data/${title}`, (err) => {
+          fs.writeFile(`data/${title}`, description, 'utf8', (err) => {
+            response.writeHead(302, {Location: `/?id=${title}`});
+            response.end();
+          })
         })
       })
     } else {
