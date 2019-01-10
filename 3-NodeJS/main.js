@@ -2,37 +2,7 @@ const http = require('http')
 const fs = require('fs')
 const url = require('url')
 const qs = require('querystring')
-
-let template = {
-  html: (title, list, desc, control) => {
-    return `
-      <!doctype html>
-      <html>
-      <head>
-      <title>WEB1 - ${title}</title>
-      <meta charset="utf-8">
-      </head>
-      <body>
-      <h1><a href="/">WEB</a></h1>
-      ${list}
-      ${control}
-      <h2>${title}</h2>
-      <p>${desc}</p>
-      </body>
-      </html>
-    `
-  },
-  list: (fileList) => {
-    let list = '<ul>'
-    let i = 0
-    while(i < fileList.length) {
-      list += `<li><a href="/?id=${fileList[i]}">${fileList[i]}</a></li>`
-      i++
-    }
-    list += '</ul>'
-    return list
-  }
-}
+const template = require('./lib/template.js')
 
 let app = http.createServer((request,response) => {
   let _url = request.url
@@ -152,6 +122,8 @@ let app = http.createServer((request,response) => {
         })
       })
     })
+
+  // Delete Page Handler
   } else if (pathName === '/delete_process') {
     let body = ''
 
