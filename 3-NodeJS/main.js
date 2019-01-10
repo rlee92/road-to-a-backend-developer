@@ -3,36 +3,36 @@ const fs = require('fs')
 const url = require('url')
 const qs = require('querystring')
 
-let templateList = (fileList) => {
-  let list = '<ul>'
-  let i = 0
-  while(i < fileList.length) {
-    list += `<li><a href="/?id=${fileList[i]}">${fileList[i]}</a></li>`
-    i++
+let template = {
+  html: (title, list, desc, control) => {
+    return `
+      <!doctype html>
+      <html>
+      <head>
+      <title>WEB1 - ${title}</title>
+      <meta charset="utf-8">
+      </head>
+      <body>
+      <h1><a href="/">WEB</a></h1>
+      ${list}
+      ${control}
+      <h2>${title}</h2>
+      <p>${desc}</p>
+      </body>
+      </html>
+    `
+  },
+  list: (fileList) => {
+    let list = '<ul>'
+    let i = 0
+    while(i < fileList.length) {
+      list += `<li><a href="/?id=${fileList[i]}">${fileList[i]}</a></li>`
+      i++
+    }
+    list += '</ul>'
+    return list
   }
-  list += '</ul>'
-  return list
 }
-
-let templateHTML = (title, list, desc, control) => {
-  return `
-    <!doctype html>
-    <html>
-    <head>
-    <title>WEB1 - ${title}</title>
-    <meta charset="utf-8">
-    </head>
-    <body>
-    <h1><a href="/">WEB</a></h1>
-    ${list}
-    ${control}
-    <h2>${title}</h2>
-    <p>${desc}</p>
-    </body>
-    </html>
-  `
-}
-
 
 let app = http.createServer((request,response) => {
   let _url = request.url
@@ -45,18 +45,18 @@ let app = http.createServer((request,response) => {
       fs.readdir('./data', (error, fileList) => {
         let title = 'Welcome'
         let description = 'Hello, Node.js'
-        let list = templateList(fileList)
+        let list = template.list(fileList)
         let createBtn = `<a href="/create"> Create </a>`
-        let template = templateHTML(title, list, description, createBtn)
+        let page = template.html(title, list, description, createBtn)
 
         response.writeHead(200)
-        response.end(template)
+        response.end(page)
       })
     } else {
       fs.readdir('./data', (error, fileList) => {
         fs.readFile(`data/${queryData.id}`, 'utf8', (err, description) => {
           let title = queryData.id
-          let list = templateList(fileList)
+          let list = template.list(fileList)
           let ctrlBtn = `
           <a href="/create">Create</a>
           <a href="/update?id=${title}">Update</a>
@@ -65,10 +65,10 @@ let app = http.createServer((request,response) => {
             <input type="submit" value="Delete">
           </form>
           `
-          let template = templateHTML(title, list, description, ctrlBtn)
+          let page = template.html(title, list, description, ctrlBtn)
 
           response.writeHead(200)
-          response.end(template)
+          response.end(page)
         })
       })
     }
@@ -77,7 +77,7 @@ let app = http.createServer((request,response) => {
   } else if (pathName === '/create') {
     fs.readdir('./data', (error, fileList) => {
       let title = 'WEB - Create'
-      let list = templateList(fileList)
+      let list = template.list(fileList)
       let createForm = `
       <form action="/create_process" method="post">
         <p><input type="text" name="title" placeholder="title"></p>
@@ -85,10 +85,10 @@ let app = http.createServer((request,response) => {
         <p><input type="submit"></p>
       </form>
       `
-      let template = templateHTML(title, list, createForm, '')
+      let page = template.html(title, list, createForm, '')
 
       response.writeHead(200)
-      response.end(template)
+      response.end(page)
     })
 
   // Create Page Handler
@@ -115,20 +115,20 @@ let app = http.createServer((request,response) => {
     fs.readdir('./data', (error, fileList) => {
       fs.readFile(`data/${queryData.id}`, 'utf8', (err, description) => {
         let title = queryData.id
-        let list = templateList(fileList)
+        let list = template.list(fileList)
         let updateForm = `
         <form action="/update_process" method="post">
           <input type="hidden" name="id" value="${title}">
           <p><input type="text" name="title" placeholder="title" value="${title}"></p>
-          <p><textarea name="description" placeholder="description" value=${description}></textarea></p>
+          <p><textarea name="description" placeholder="description">${description}</textarea></p>
           <p><input type="submit"></p>
         </form>
         `
         let ctrlBtn = `<a href="/create"> Create </a> <a href="/update?id=${title}"> Update </a>`
-        let template = templateHTML(title, list, updateForm, ctrlBtn)
+        let page = template.html(title, list, updateForm, ctrlBtn)
 
         response.writeHead(200)
-        response.end(template)
+        response.end(page)
       })
     })
 
