@@ -57,7 +57,14 @@ let app = http.createServer((request,response) => {
         fs.readFile(`data/${queryData.id}`, 'utf8', (err, description) => {
           let title = queryData.id
           let list = templateList(fileList)
-          let ctrlBtn = `<a href="/create"> Create </a> <a href="/update?id=${title}"> Update </a>`
+          let ctrlBtn = `
+          <a href="/create">Create</a>
+          <a href="/update?id=${title}">Update</a>
+          <form action="/delete_process" method="post">
+            <input type="hidden" name="id" value="${title}">
+            <input type="submit" value="Delete">
+          </form>
+          `
           let template = templateHTML(title, list, description, ctrlBtn)
 
           response.writeHead(200)
@@ -145,6 +152,21 @@ let app = http.createServer((request,response) => {
         })
       })
     })
+  } else if (pathName === '/delete_process') {
+    let body = ''
+
+    request.on('data', (data) => {
+      body += data
+    })
+    request.on('end', _ => {
+      let post = qs.parse(body)
+      let id = post.id
+      fs.unlink(`./data/${id}`, (err) => {
+        response.writeHead(302, {Location: `/`})
+        response.end()
+      })
+    })
+
   } else {
     response.writeHead(404)
     response.end('Page Not Found!')
