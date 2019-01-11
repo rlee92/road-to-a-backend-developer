@@ -2,6 +2,7 @@ const http = require('http')
 const fs = require('fs')
 const url = require('url')
 const qs = require('querystring')
+const path = require('path')
 const template = require('./lib/template.js')
 
 let app = http.createServer((request,response) => {
@@ -24,7 +25,8 @@ let app = http.createServer((request,response) => {
       })
     } else {
       fs.readdir('./data', (error, fileList) => {
-        fs.readFile(`data/${queryData.id}`, 'utf8', (err, description) => {
+        let filteredId = path.parse(queryData.id).base
+        fs.readFile(`data/${filteredId}`, 'utf8', (err, description) => {
           let title = queryData.id
           let list = template.list(fileList)
           let ctrlBtn = `
@@ -83,7 +85,8 @@ let app = http.createServer((request,response) => {
   // Update Page
   } else if (pathName === '/update') {
     fs.readdir('./data', (error, fileList) => {
-      fs.readFile(`data/${queryData.id}`, 'utf8', (err, description) => {
+      let filteredId = path.parse(queryData.id).base
+      fs.readFile(`data/${filteredId}`, 'utf8', (err, description) => {
         let title = queryData.id
         let list = template.list(fileList)
         let updateForm = `
@@ -133,7 +136,8 @@ let app = http.createServer((request,response) => {
     request.on('end', _ => {
       let post = qs.parse(body)
       let id = post.id
-      fs.unlink(`./data/${id}`, (err) => {
+      let filteredId = path.parse(id).base
+      fs.unlink(`./data/${filteredId}`, (err) => {
         response.writeHead(302, {Location: `/`})
         response.end()
       })
