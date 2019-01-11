@@ -3,7 +3,9 @@ const fs = require('fs')
 const url = require('url')
 const qs = require('querystring')
 const path = require('path')
+const sanitizeHtml = require('sanitize-html')
 const template = require('./lib/template.js')
+
 
 let app = http.createServer((request,response) => {
   let _url = request.url
@@ -28,6 +30,8 @@ let app = http.createServer((request,response) => {
         let filteredId = path.parse(queryData.id).base
         fs.readFile(`data/${filteredId}`, 'utf8', (err, description) => {
           let title = queryData.id
+          let sanitizedTitle = sanitizeHtml(title)
+          let sanitizedDescription = sanitizeHtml(description)
           let list = template.list(fileList)
           let ctrlBtn = `
           <a href="/create">Create</a>
@@ -37,7 +41,7 @@ let app = http.createServer((request,response) => {
             <input type="submit" value="Delete">
           </form>
           `
-          let page = template.html(title, list, description, ctrlBtn)
+          let page = template.html(sanitizedTitle, list, sanitizedDescription, ctrlBtn)
 
           response.writeHead(200)
           response.end(page)
